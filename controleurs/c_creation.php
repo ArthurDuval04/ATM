@@ -110,6 +110,7 @@ switch($action){
                 if ($executionOK==true){
                     echo "c'est bon, votre compte a bien été créé ;-)";
                     $pdo->connexionInitiale($leLogin);
+                    $pdo->insererToken($leLogin);
                 }   
                 else
                      echo "ce login existe déjà, veuillez en choisir un autre";

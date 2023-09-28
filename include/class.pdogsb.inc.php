@@ -127,7 +127,33 @@ public function creeMedecin($email, $mdp)
     return $execution;
     
 }
+public function insererToken($mail) {
+    $token = genrerToken();
+    $expiration = date('Y-m-d H:i:s', strtotime('+24 hours'));
+    $pdoStatement = PdoGsb::$monPdo->prepare("UPDATE medecin SET token = :token ,expiration_token = :expiration WHERE mail = :mail");
+    $bv1 = $pdoStatement->bindValue(':token', $token);
+    $bv2 = $pdoStatement->bindValue(':expiration', $expiration);
+    $bv3 = $pdoStatement->bindValue(':mail', $mail);
+    $execution = $pdoStatement->execute();
+    return $execution;
+}
 
+public function recupererToken($mail) {
+
+    $monObjPdoStatement=$pdo->prepare("SELECT token, expiration_token FROM medecin WHERE mail= :lemail");
+    $bvc1=$monObjPdoStatement->bindValue(':lemain',$mail);
+    if ($monObjPdoStatement->execute()) {
+        $unUser=$monObjPdoStatement->fetch();
+    }
+    else {
+     throw new Exception("erreur");
+           
+    }
+}
+
+public function sendMail($mail) {
+
+}
 
 public function testMail($email){
     $pdo = PdoGsb::$monPdo;

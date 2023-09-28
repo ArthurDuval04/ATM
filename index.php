@@ -30,7 +30,6 @@ switch($uc){
         case 'creation':{
 		include("controleurs/c_creation.php");break;
 	}
-        
 	
 	}
 
