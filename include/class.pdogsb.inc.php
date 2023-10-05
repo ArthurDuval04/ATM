@@ -62,7 +62,7 @@ function checkUser($login,$pwd):bool {
     //AJOUTER TEST SUR TOKEN POUR ACTIVATION DU COMPTE
     $user=false;
     $pdo = PdoGsb::$monPdo;
-    $monObjPdoStatement=$pdo->prepare("SELECT motDePasse FROM medecin WHERE mail= :login AND token IS NULL");
+    $monObjPdoStatement=$pdo->prepare("SELECT motDePasse FROM medecin WHERE mail= :login");
     $bvc1=$monObjPdoStatement->bindValue(':login',$login,PDO::PARAM_STR);
     if ($monObjPdoStatement->execute()) {
         $unUser=$monObjPdoStatement->fetch();
@@ -113,6 +113,36 @@ $leResultat = $pdoStatement->fetch();
        
        
 }
+public function getDateTokenBdd($token) {
+    $requetepdo = PdoGsb::$monPdo->prepare("SELECT expiration_token FROM medecin WHERE token = :letoken");
+    $requetepdo->bindValue(':letoken', $token);
+    $requetepdo->execute();
+    $ladate = $requetepdo->fetch();
+    if ($ladate !== false && isset($ladate['expiration_token'])) {
+        $timestampBDD = strtotime($ladate['expiration_token']);
+        $timestampActuel = time();
+        $difference = $timestampActuel - $timestampBDD;
+        $differenceEnHeures = $difference / 3600;
+        return $differenceEnHeures;
+    } else {
+        return "Date non trouvée"; 
+    }
+}
+public function getVerifMail($token) {  
+    $requetepdo = PdoGsb::$monPdo->prepare("SELECT mailverifie FROM medecin WHERE token = :letoken");
+    $requetepdo->bindValue(':letoken', $token);
+    $requetepdo->execute();
+    $valeur = $requetepdo->fetch();
+    return $valeur[0];
+
+}
+public function aVerifieMail($token) {  
+    $pdoStatement = PdoGsb::$monPdo->prepare("UPDATE medecin SET mailverifie = :averifie WHERE token = :letoken");
+    $bv1 = $pdoStatement->bindValue(':averifie', 1);
+    $bv2= $pdoStatement->bindValue(':letoken', $token);
+    $execution = $pdoStatement->execute();
+    return $execution;
+}
 
 
 public function creeMedecin($email, $mdp)
@@ -127,8 +157,8 @@ public function creeMedecin($email, $mdp)
     return $execution;
     
 }
-public function insererToken($mail) {
-    $token = genrerToken();
+public function insererToken($mail, $token) {
+   
     $expiration = date('Y-m-d H:i:s', strtotime('+24 hours'));
     $pdoStatement = PdoGsb::$monPdo->prepare("UPDATE medecin SET token = :token ,expiration_token = :expiration WHERE mail = :mail");
     $bv1 = $pdoStatement->bindValue(':token', $token);
@@ -140,8 +170,8 @@ public function insererToken($mail) {
 
 public function recupererToken($mail) {
 
-    $monObjPdoStatement=$pdo->prepare("SELECT token, expiration_token FROM medecin WHERE mail= :lemail");
-    $bvc1=$monObjPdoStatement->bindValue(':lemain',$mail);
+    $monObjPdoStatement=PdoGsb::$monPdo->prepare("SELECT token,expiration_token FROM medecin WHERE mail= :lemail");
+    $bvc1=$monObjPdoStatement->bindValue(':lemail',$mail);
     if ($monObjPdoStatement->execute()) {
         $unUser=$monObjPdoStatement->fetch();
     }
@@ -149,10 +179,7 @@ public function recupererToken($mail) {
      throw new Exception("erreur");
            
     }
-}
-
-public function sendMail($mail) {
-
+    return $unUser;
 }
 
 public function testMail($email){

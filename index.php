@@ -2,6 +2,7 @@
 <?php
 require_once("include/fct.inc.php");
 require_once ("include/class.pdogsb.inc.php");
+require_once ("include/modelEmail.php");
 session_start();
 
 
@@ -30,9 +31,11 @@ switch($uc){
         case 'creation':{
 		include("controleurs/c_creation.php");break;
 	}
-	
+	case 'validetoken':{
+		include("controleurs/c_validetoken.php");break;
 	}
 
+}
 	include("vues/v_footer.php")
 	
 

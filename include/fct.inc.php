@@ -81,14 +81,18 @@ function nbErreurs(){
 function genrerToken() {
 	return md5(uniqid(rand(), true));
 }
+
+
 function getDateToken($dateBDD) {
-	// Date et heure actuelles
-	$dateActuelle = date("Y-m-d H:i:s");
-	$timestampBDD = strtotime($dateBDD);
-	$timestampActuel = strtotime($dateActuelle);
-	// Calculez la différence en secondes
-	$difference = $timestampActuel - $timestampBDD;
-	return $difference;
+    $dateActuelle = date("Y-m-d H:i:s");
+    $timestampBDD = strtotime($dateBDD);
+    $timestampActuel = strtotime($dateActuelle);
+
+    $difference = $timestampActuel - $timestampBDD;
+
+    $differenceEnHeures = $difference / 3600;
+    
+    return $differenceEnHeures;
 }
 
 function input_data($data){
