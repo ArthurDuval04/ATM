@@ -29,7 +29,7 @@
         
         <li class="active"><a href="index.php?uc=etatFrais&action=selectionnerMois">M'inscrire à une visio</a></li> 
         
-        <li class="active"><a href="index.php?uc=maintenance&action=activer">Mettre en maintenance</a></li> 
+        <li class="active"><a href="index.php?uc=maintenance&action=activer">Mettre en maintenance.</a></li> 
         <li class="active"><a href="index.php?uc=maintenance&action=desactiver">Enlever la maintenance</a></li>
         <li class="active"><a href="index.php?uc=etatFrais&action=selectionnerMois">Gérer les opérations</a></li> 
     
