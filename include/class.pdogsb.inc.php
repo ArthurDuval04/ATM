@@ -87,7 +87,7 @@ return $user;
 function donneLeMedecinByMail($login) {
     
     $pdo = PdoGsb::$monPdo;
-    $monObjPdoStatement=$pdo->prepare("SELECT id, nom, prenom,mail FROM medecin WHERE mail= :login");
+    $monObjPdoStatement=$pdo->prepare("SELECT id, nom, prenom,mail,roleMedecin,mailverifie, droitConnexion,roleMedecin FROM medecin WHERE mail= :login");
     $bvc1=$monObjPdoStatement->bindValue(':login',$login,PDO::PARAM_STR);
     if ($monObjPdoStatement->execute()) {
         $unUser=$monObjPdoStatement->fetch();
@@ -97,6 +97,28 @@ function donneLeMedecinByMail($login) {
         throw new Exception("erreur dans la requÃªte");
     return $unUser;   
 }
+
+function donnerValidateur() {
+    $pdo = PdoGsb::$monPdo;
+    $monObjPdoStatement=$pdo->prepare("SELECT id, nom, prenom,mail,roleMedecin,mailverifie, droitConnexion FROM medecin WHERE roleMedecin= :roleId");
+    $bvc1=$monObjPdoStatement->bindValue(':roleId',4);
+    if ($monObjPdoStatement->execute()) {
+        $unValidateur=$monObjPdoStatement->fetch();
+       
+    }
+    else
+        throw new Exception("erreur dans la requÃªte");
+    return $unValidateur;   
+}
+function validerUser($mail) {
+    $pdoStatement = PdoGsb::$monPdo->prepare("UPDATE medecin SET droitConnexion = :aledroit WHERE mail = :lemail");
+    $bv1 = $pdoStatement->bindValue(':aledroit', 1);
+    $bv2= $pdoStatement->bindValue(':lemail', $mail);
+    $execution = $pdoStatement->execute();
+    return $execution;
+}
+
+
 
 
 public function tailleChampsMail(){
@@ -145,18 +167,61 @@ public function aVerifieMail($token) {
 }
 
 
-public function creeMedecin($email, $mdp)
+public function creeMedecin($email, $mdp, $nom, $prenom, $tel, $RPPS, $dateNaissance, $dateDiplome)
 {
-   
-    $pdoStatement = PdoGsb::$monPdo->prepare("INSERT INTO medecin(id,mail, motDePasse,dateCreation,dateConsentement) "
-            . "VALUES (null, :leMail, :leMdp, now(),now())");
+
+    $pdoStatement = PdoGsb::$monPdo->prepare("INSERT INTO medecin(id, mail, motDePasse, nom, prenom, telephone, RPPS, datenaissance, dateDiplome,mailverifie) 
+            VALUES (null, :leMail, :leMdp, :leNom, :lePrenom, :leTel, :leRPPS, :ladateNaissance, :ladateDiplome, :mailverif)");
     $bv1 = $pdoStatement->bindValue(':leMail', $email);
-   
     $bv2 = $pdoStatement->bindValue(':leMdp', $mdp);
+    $bv5 = $pdoStatement->bindValue(':leNom', $nom);
+    $bv6 = $pdoStatement->bindValue(':lePrenom', $prenom);
+    $bv7 = $pdoStatement->bindValue(':leTel', $tel);
+    $bv8 = $pdoStatement->bindValue(':leRPPS', $RPPS);
+    $bv9 = $pdoStatement->bindValue(':ladateNaissance', $dateNaissance);
+    $bv10 = $pdoStatement->bindValue(':ladateDiplome', $dateDiplome);
+    $bv11 = $pdoStatement->bindValue(':mailverif', 0);
     $execution = $pdoStatement->execute();
     return $execution;
     
 }
+public function creeAuthLigne($email)
+{
+    $idMed = $this->donneLeMedecinByMail($email);
+    $expirationTime = date('Y-m-d H:i:s', strtotime('+300 seconds'));
+    $pdoStatement = PdoGsb::$monPdo->prepare("INSERT INTO auth_codes(idMedecin,code, expiration_time)"
+            . "VALUES (:leid,:code ,:expTime)");
+
+    $bv1 = $pdoStatement->bindValue(':leid', $idMed["id"]);
+    $bv2 = $pdoStatement->bindValue(':expTime', $expirationTime);
+    $bv3 = $pdoStatement->bindValue(':code',generateCode());
+    $execution = $pdoStatement->execute();
+    return $execution;
+    
+}
+function updateAuthCode($mail) {
+    $code= strtolower(generateCode());
+    $idMed = $this->donneLeMedecinByMail($mail);
+    $pdoStatement = PdoGsb::$monPdo->prepare("UPDATE auth_codes SET code = :lecode WHERE idMedecin = :leid");
+    $bv1 = $pdoStatement->bindValue(':lecode', $code);
+    $bv3 = $pdoStatement->bindValue(':leid', $idMed["id"]);
+    $execution = $pdoStatement->execute();
+    return $execution;
+}
+public function recupererAuthCode($mail) {
+    $idMed = $this->donneLeMedecinByMail($mail);
+    $monObjPdoStatement=PdoGsb::$monPdo->prepare("SELECT code, expiration_time FROM auth_codes WHERE idMedecin= :leid");
+    $bvc1=$monObjPdoStatement->bindValue(':leid',$idMed["id"]);
+    if ($monObjPdoStatement->execute()) {
+        $unUser=$monObjPdoStatement->fetch();
+    }
+    else {
+     throw new Exception("erreur");
+           
+    }
+    return $unUser;
+}
+
 public function insererToken($mail, $token) {
    
     $expiration = date('Y-m-d H:i:s', strtotime('+24 hours'));
@@ -167,6 +232,7 @@ public function insererToken($mail, $token) {
     $execution = $pdoStatement->execute();
     return $execution;
 }
+
 
 public function recupererToken($mail) {
 
@@ -207,9 +273,21 @@ function connexionInitiale($mail){
     
 }
 
+function deconnectionInitiale($id){
+    $pdo = PdoGsb::$monPdo;
+    $this->ajouteDeconnexionInitiale($id);
+   
+}
 function ajouteConnexionInitiale($id){
     $pdoStatement = PdoGsb::$monPdo->prepare("INSERT INTO historiqueconnexion "
-            . "VALUES (:leMedecin, now(), now())");
+            . "VALUES (:leMedecin, now(), null)");
+    $bv1 = $pdoStatement->bindValue(':leMedecin', $id);
+    $execution = $pdoStatement->execute();
+    return $execution;
+    
+}
+function ajouteDeconnexionInitiale($id){
+    $pdoStatement = PdoGsb::$monPdo->prepare("UPDATE historiqueconnexion SET dateFinLog = now() WHERE idMedecin = :leMedecin AND dateFinLog IS NULL ");
     $bv1 = $pdoStatement->bindValue(':leMedecin', $id);
     $execution = $pdoStatement->execute();
     return $execution;
@@ -218,7 +296,7 @@ function ajouteConnexionInitiale($id){
 function donneinfosmedecin($id){
   
        $pdo = PdoGsb::$monPdo;
-           $monObjPdoStatement=$pdo->prepare("SELECT id,nom,prenom FROM medecin WHERE id= :lId");
+           $monObjPdoStatement=$pdo->prepare("SELECT id,nom,prenom,mail,dateNaissance,telephone FROM medecin WHERE id= :lId");
     $bvc1=$monObjPdoStatement->bindValue(':lId',$id,PDO::PARAM_INT);
     if ($monObjPdoStatement->execute()) {
         $unUser=$monObjPdoStatement->fetch();
@@ -227,9 +305,32 @@ function donneinfosmedecin($id){
     else
         throw new Exception("erreur");
            
+    return $unUser;
     
 }
+function Maintenance($status){
+    $pdoStatement = PdoGsb::$monPdo->prepare("UPDATE maintenance SET active = :active WHERE idMaintenance = :id");
+    $bv1 = $pdoStatement->bindValue(':active', $status);
+    $bv2 = $pdoStatement->bindValue(':id', 1);
+    $execution = $pdoStatement->execute();
+    return $execution;
+    
+}
+function checkMaintenance(){
+  
+    $pdo = PdoGsb::$monPdo;
+        $monObjPdoStatement=$pdo->prepare("SELECT active FROM maintenance WHERE idMaintenance= :lId");
+ $bvc1=$monObjPdoStatement->bindValue(':lId',1);
+ if ($monObjPdoStatement->execute()) {
+     $lamaintenance=$monObjPdoStatement->fetch();
 
+ }
+ else {
+     throw new Exception("erreur");
+ }
+ return $lamaintenance;
+
+}
 
 }
 ?>

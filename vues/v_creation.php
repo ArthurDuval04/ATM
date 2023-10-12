@@ -31,10 +31,16 @@
           <div class="content-wrap">
 						<legend>je suis médecin, je souhaite créer un compte</legend>
 							<form method="post" action="index.php?uc=creation&action=valideCreation">
-                  <input name="login" class="form-control" type="email" placeholder="mail"/>
-							    <input name="mdp" class="form-control" type="password" placeholder="password"/>
-                  <input name="prénom" class="form-control" type="text" placeholder="prénom"/>
-                  <input name="nom" class="form-control" type="text" placeholder="nom"/>
+              <input name="login" class="form-control" type="email" placeholder="mail"/>
+                <input name="mdp" class="form-control" type="password" placeholder="password"/>
+                <input name="prenom" class="form-control" type="text" placeholder="prénom"/>
+                <input name="nom" class="form-control" type="text" placeholder="nom"/>
+                <input name="numerodetelephone" class="form-control" type="tel" placeholder="numéro de téléphone"/>
+                <input name="RPPS" class="form-control" type="text" placeholder="RPPS"/>
+                <label for="Datedenaissance">date de naissance</label>
+                <input name="datenaissance" class="form-control" type="date" placeholder="Date de naissance"/>
+                <label for="Datedediplome">date de diplome</label>
+                <input name="Datedediplome" class="form-control" type="date" placeholder="Date de diplôme"/>
 								<br>
                 <div class="form-check">
                     <input name ="acceptepolitquecheckbox" class="form-check-input" type="checkbox" value="" id="flexCheckDefault">

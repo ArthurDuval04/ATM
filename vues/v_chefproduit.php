@@ -46,7 +46,8 @@ else {
         
         <li class="active"><a href="index.php?uc=etatFrais&action=selectionnerMois">M'inscrire à une visio</a></li> 
         <li class="active"><a href="index.php?uc=portabilite&action=consulter">Droit a la portabilite</a></li>
-         
+        <li class="active"><a href="index.php?uc=portabilite&action=consulter">Créer une visio</a></li>
+        <li class="active"><a href="index.php?uc=portabilite&action=consulter">Créer un produit</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
 		  <li><a><?php echo $_SESSION['prenom']."  ".$_SESSION['nom']?></a></li>

@@ -16,10 +16,31 @@ function estConnecte(){
  * @param $nom
  * @param $prenom
  */
-function connecter($id,$nom,$prenom){
+function connecter($id,$nom,$prenom,$role){
 	$_SESSION['id']= $id; 
 	$_SESSION['nom']= $nom;
 	$_SESSION['prenom']= $prenom;
+	switch($role) {
+
+		case '1':
+			$_SESSION['role'] = 'Administrateur';
+			break;
+
+		case'2':
+			$_SESSION['role'] = 'Moderateur';
+			break;
+		case'3':
+			$_SESSION['role'] = "ChefdeProduit";
+			break;
+		case'4':
+			$_SESSION['role'] = "Validateur";
+			break;
+		case'5':
+			$_SESSION['role'] = "Medecin";
+			break;
+	}
+	
+
 }
 
 
@@ -105,14 +126,14 @@ function input_data($data){
 
 
     
-    function generateCode(){
-          // Generate a 6 digits hexadecimal number
-	  $numbytes = 3; // Because 6 digits hexadecimal = 3 bytes
-	  $bytes = openssl_random_pseudo_bytes($numbytes); 
-          $hex   = bin2hex($bytes);
-	  return $hex;
-        
-    }
+function generateCode(){
+      // Generate a 6 digits hexadecimal number
+  $numbytes = 3; // Because 6 digits hexadecimal = 3 bytes
+  $bytes = openssl_random_pseudo_bytes($numbytes); 
+      $hex   = bin2hex($bytes);
+  return $hex;
+    
+}
     
     
     
