@@ -46,6 +46,7 @@ else {
         
         <li class="active"><a href="index.php?uc=etatFrais&action=selectionnerMois">M'inscrire à une visio</a></li> 
         <li class="active"><a href="index.php?uc=portabilite&action=consulter">Droit a la portabilite</a></li>
+        <li class="active"><a href="index.php?uc=produit&action=voirLesProduits">consulter les produits2</a></li> 
          
       </ul>
       <ul class="nav navbar-nav navbar-right">

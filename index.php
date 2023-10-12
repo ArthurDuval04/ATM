@@ -58,6 +58,9 @@ $estConnecte = estConnecte();
 	   case 'portabilite' : {
 		include("controleurs/c_droits.php");break;
 	   }
+	   case 'produit':{
+		include("controleurs/c_produit.php");break;
+	}
 
    }
 	   include("vues/v_footer.php");
