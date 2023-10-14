@@ -21,7 +21,7 @@ class PdoGsb{
       	private static $bdd='dbname=gsbextranet';   		
       	private static $user='gsbextranet' ;    		
       	private static $mdp='DqGpgB35mwCNkeq' ;	
-	private static $monPdo;
+	public static $monPdo;
 	private static $monPdoGsb=null;
 		
 /**
@@ -110,10 +110,10 @@ function donnerValidateur() {
         throw new Exception("erreur dans la requÃªte");
     return $unValidateur;   
 }
-function validerUser($mail) {
-    $pdoStatement = PdoGsb::$monPdo->prepare("UPDATE medecin SET droitConnexion = :aledroit WHERE mail = :lemail");
+function validerUser($id) {
+    $pdoStatement = PdoGsb::$monPdo->prepare("UPDATE medecin SET droitConnexion = :aledroit WHERE id = :id");
     $bv1 = $pdoStatement->bindValue(':aledroit', 1);
-    $bv2= $pdoStatement->bindValue(':lemail', $mail);
+    $bv2= $pdoStatement->bindValue(':id', $id);
     $execution = $pdoStatement->execute();
     return $execution;
 }

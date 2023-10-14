@@ -5,23 +5,26 @@ if(!isset($_GET['action'])){
 }
 
 $action = $_GET['action'];
-
-switch($action) {
-    case 'demandeValidation': 
-        include('vues/v_validateur.php');
-        break;
-    case 'valider': 
-        $mail = $_POST['email'];
-        if (!$pdo->validerUser($mail)){
-            $pdo->validerUser($mail);
-            echo "Utilisateur validé avec succès";
-        } else {
-            echo "Utilisateur déjà validé";
-        }
-         
-       
-        
-        
-        break;
+if($_SESSION["role"] == "Validateur") {
+    switch($action) {
+        case 'demandeValidation': 
+            include('vues/v_validateur.php');
+            break;
+        case 'AccepteMedecin': 
+            $id = $_GET['id'];
+          
+                $pdo->validerUser($id);
+                echo "Utilisateur validé avec succès";
+           
+           
+            
+            break;
+        case 'liste' :
+            include('vues/v_listeavalider.php');
+            break;
+    
+    
+    }
 }
+
 ?>

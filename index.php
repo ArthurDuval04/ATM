@@ -34,7 +34,7 @@ $estConnecte = estConnecte();
 	   case 'connexion':{
 		   include("controleurs/c_connexion.php");break;
 	   }
-		   case 'creation':{
+		case 'creation':{
 		   include("controleurs/c_creation.php");break;
 	   }
 	   case 'validetoken':{
@@ -52,8 +52,6 @@ $estConnecte = estConnecte();
 	   }
 	   case 'validateur' : {
 		include 'controleurs/c_validateur.php';break;
-	   }case 'authCode' : {
-		include 'controleurs/c_authCode.php';break;
 	   }
 	   case 'portabilite' : {
 		include("controleurs/c_droits.php");break;

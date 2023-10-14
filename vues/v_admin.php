@@ -23,13 +23,12 @@
       <a class="navbar-brand" href="#">Galaxy Swiss Bourdin</a>
     </div>
 
-    <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
         
         <li class="active"><a href="index.php?uc=etatFrais&action=selectionnerMois">M'inscrire à une visio</a></li> 
         
-        <li class="active"><a href="index.php?uc=maintenance&action=activer">Mettre en maintenance.</a></li> 
+        <li class="active"><a href="index.php?uc=maintenance&action=activer">Mettre en maintenance</a></li> 
         <li class="active"><a href="index.php?uc=maintenance&action=desactiver">Enlever la maintenance</a></li>
         <li class="active"><a href="index.php?uc=etatFrais&action=selectionnerMois">Gérer les opérations</a></li> 
     
@@ -40,8 +39,8 @@
 		<li><a href="index.php?uc=gestionRole&action=admin"> <?php echo $_SESSION["role"]?></a></li>
     <li><a href="index.php?uc=deconnection&action=deconnecter">Se deconnecter</a></li>
      </ul>
-    </div><!-- /.navbar-collapse -->
-  </div><!-- /.container-fluid -->
+    </div>
+  </div>
 </nav>
 
 

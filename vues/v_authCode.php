@@ -15,7 +15,7 @@
 				<div class="box">
 					<div class="content-wrap">
 						<legend>Entrez le code reçu par mail</legend>
-							<form method="post" action="index.php?uc=authCode&action=valider">
+							<form method="post" action="index.php?uc=connexion&action=valideAuthCode">
                             <div class="row mb-4">
                                 <div class="col-md-3 col-md-0 col-2 ps-0 ps-md-2">
                                     <input maxlength="1" id ="num1" name="num1" type="text" class="form-control text-lg text-center" placeholder="_" aria-label="2fa">
