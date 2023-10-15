@@ -22,6 +22,9 @@ if($_SESSION["role"] == "Validateur") {
         case 'liste' :
             include('vues/v_listeavalider.php');
             break;
+            case 'listecommentaires' :
+                include('vues/v_listeCommentaires.php');
+                break;
     
     
     }

@@ -3,7 +3,7 @@ if (!$_SESSION['id'])
     header('Location: ../index.php');
 else {
 ?>
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="fr">
   <head>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
@@ -15,7 +15,7 @@ else {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Bootstrap -->
     <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
-	<link href="assets/profilcss/profil.css" rel="stylesheet">
+	  <link href="assets/profilcss/profil.css" rel="stylesheet">
     <!-- styles -->
     <link href="css/styles.css" rel="stylesheet">
 

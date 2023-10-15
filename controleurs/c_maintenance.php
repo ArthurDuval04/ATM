@@ -20,12 +20,6 @@ if ($_SESSION["role"] == "Administrateur") {
             include('vues/v_admin.php');
             echo '<script>alert("Vous venez d\'enlever le site en maintenance")</script>'; 
             break;
-    
     }
-
 }
-
-
-    
-
 ?>

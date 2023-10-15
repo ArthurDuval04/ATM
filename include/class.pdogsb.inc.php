@@ -331,6 +331,57 @@ function checkMaintenance(){
  return $lamaintenance;
 
 }
-
+function produit(){
+    $pdo = PdoGsb::$monPdo;
+    $sql = "SELECT * FROM produit";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute();
+    return $stmt->fetchAll();
 }
+function creerProduit($nom,$descriptio,$effets,$img_name,$objectif){
+    $pdoStatement = PdoGsb::$monPdo->prepare("INSERT INTO produit(nom,objectif, information,effetIndesirable,img_name,estValide) "
+            . "VALUES (:nom, :obj, :info,:effet,:img,:valide)");
+    $bv1 = $pdoStatement->bindValue(':nom', $nom);
+    $bv2= $pdoStatement->bindValue(':obj', $objectif);
+    $bv3 = $pdoStatement->bindValue(':info', $descriptio);
+    $bv4 = $pdoStatement->bindValue(':effet', $effets);
+    $bv5 = $pdoStatement->bindValue(':img', $img_name);
+    $bv6 = $pdoStatement->bindValue(':valide', 0);
+    $execution = $pdoStatement->execute();
+    return $execution;
+    
+}
+function produitValides(){
+    $pdo = PdoGsb::$monPdo;
+    $sql = $pdo->prepare("SELECT * FROM produit WHERE estValide = :valeur");
+    $bv1 = $sql->bindValue(':valeur', 1);
+    $sql->execute();
+    return $sql->fetchAll();
+}
+function produitnonValides(){
+    $pdo = PdoGsb::$monPdo;
+    $sql = $pdo->prepare("SELECT * FROM produit WHERE estValide = :valeur");
+    $bv1 = $sql->bindValue(':valeur', 0);
+    $sql->execute();
+    return $sql->fetchAll();
+}
+
+function validerProduit($id){
+    $pdo = PdoGsb::$monPdo;
+    $sql = $pdo->prepare("UPDATE produit SET estValide = :estValide WHERE id = :id");
+    $bv1 = $sql->bindValue(':id', $id);
+    $bv2 = $sql->bindValue(':estValide', 1);
+    $sql->execute();
+    return $sql->fetchAll();
+}
+
+function refuserProduit($id){
+    $pdo = PdoGsb::$monPdo;
+    $sql = $pdo->prepare("DELETE FROM produit WHERE id = :id");
+    $bv1 = $sql->bindValue(':id', $id);
+    $sql->execute();
+    return $sql->fetchAll();
+}
+}
+
 ?>

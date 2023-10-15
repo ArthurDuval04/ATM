@@ -1,36 +1,38 @@
 ﻿
 
-  <body background="assets/img/laboratoire.jpg">
-  <link rel="stylesheet" href="../css/styleproduit.css">
+<?php 
+  include("v_sommaire.php");
 
+?>
+
+
+  <body background="assets/img/laboratoire.jpg">
+  <link rel="stylesheet" href="css/styleproduit.css">
+  <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
       <!-- **********************************************************************************************************************************************************
       MAIN CONTENT
       *********************************************************************************************************************************************************** -->
 
-<div class="page-content container">
-<h2 > voici les produits présentés : </h2>
-    <h3> survoler les produits qui vous intéresses pour en apprendre plus</h3>
-
+<div class="container">
+<h2 > Voici les produits présentés : </h2>
     <div class="flip-cards-container">
     <?php
-   
-   
-    $lesProduits = $pdo->produit();
+    $lesProduits = $pdo->produitValides();
     foreach ($lesProduits as $row) {
-        echo '<div class="flip-card">';
-        echo '  <div class="flip-card-inner">';
-        echo '    <div class="flip-card-front">';
-        echo '      ' . $row["nom"];
-        echo '      ' . '<img src="' . $row["effetIndesirable"] . '" alt="' . $row['nom'] . '" width="100">';
-        echo '    </div>';
-        echo '    <div class="flip-card-back">';
-        echo '      <p>' . $row["objectif"] . '</p>';
-        echo '      <a href="' . $row["information"] . '" target="_blank" class="bouton-lien">En savoir plus</a>';
-        echo '    </div>';
-        echo '  </div>';
-        echo '</div>';
+
+        echo '<div class="flip-card">
+          <div class="flip-card-inner text-center bg-white">
+            <div class="flip-card-front">
+              <img class="produitImg" src="images/' . $row["img_name"] . '" alt="' . $row['nom'] . '" width="100">
+              <h3 class="titleProduit">' . $row["nom"] .'</h3>
+              <p> Effets indésirables : <strong>'. $row["objectif"] . '</strong></p>
+              <p> Informations : <strong>'. $row["information"] . '</p>
+            </div>
+          </div>
+        </div>';
     }
     ?>
+    </div>
 </div>
 
 

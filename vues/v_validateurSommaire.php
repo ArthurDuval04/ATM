@@ -3,7 +3,7 @@ if (!$_SESSION['id'])
     header('Location: ../index.php');
 else {
 ?>
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="fr">
   <head>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
@@ -44,7 +44,7 @@ else {
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
         
-        <li class="active"><a href="index.php?uc=etatFrais&action=selectionnerMois">Commentaires à valider</a></li> 
+        <li class="active"><a href="index.php?uc=validateur&action=listecommentaires">Commentaires à valider</a></li> 
         <li class="active"><a href="index.php?uc=validateur&action=liste">Utilisateurs à valider</a></li>
          
       </ul>

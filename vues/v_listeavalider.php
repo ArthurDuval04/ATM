@@ -21,7 +21,8 @@ else {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Bootstrap -->
     <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
-	<link href="assets/profilcss/profil.css" rel="stylesheet">
+	  <link href="assets/profilcss/profil.css" rel="stylesheet">
+    
     <!-- styles -->
     <link href="css/styles.css" rel="stylesheet">
 
@@ -65,7 +66,7 @@ else {
 </nav>
 <table id="myTable" class="table table-hover">
                    <caption><center>Vous avez <?php echo $nbMed?> utilisateurs à valider</center></caption>
-                   <thead> <!-- En-tête du tableau -->
+                   <thead class ="thead-dark"> <!-- En-tête du tableau -->
                        <tr id="tr" class="tr bg-success text-white" >
                            <th onclick="sortTable(1)" scope="col" >Nom</th>
                            <th onclick="sortTable(2)" scope="col" >Prénom</th>
