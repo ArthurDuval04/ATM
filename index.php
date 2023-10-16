@@ -58,11 +58,18 @@ $estConnecte = estConnecte();
 	   }
 	   case 'produit':{
 		include("controleurs/c_produit.php");break;
-	}
+		}	
+		case 'visioavenir' : {
+		include("controleurs/c_visioavenir.php");break;
+		}
+		case 'visiopasse' : {
+		include("controleurs/c_visiopasse.php");break;
+		}
+		
 
    }
 	   include("vues/v_footer.php");
-   
+
 
 
 
