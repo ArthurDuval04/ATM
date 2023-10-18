@@ -30,6 +30,7 @@ else {
   <body background="assets/img/laboratoire.jpg">
   <nav class="navbar navbar-expand-lg bg-light">
   <div class="container-fluid">
+<<<<<<< HEAD
     <a class="navbar-brand" href="#">Galaxy Swiss Bourdin</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -45,6 +46,28 @@ else {
         <li class="nav-item">
           <a class ="nav-link" href="index.php?uc=produit&action=voirLesProduits">Consulter les produits</a>
         </li>
+=======
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">Galaxy Swiss Bourdin</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        
+        <li class="active"><a href="index.php?uc=visioavenir&action=consulter">Visioconférence à venir</a></li> 
+        <li class="active"><a href="index.php?uc=visiopasse&action=consulter">Visioconférence passé</a></li> 
+        <li class="active"><a href="index.php?uc=portabilite&action=consulter">Droit à la portabilite</a></li>
+        <li class="active"><a href="index.php?uc=produit&action=voirLesProduits">consulter les produits2</a></li> 
+         
+>>>>>>> ea9af7b34c8de464004aa03abf21a30c04eb2fd4
       </ul>
       <ul class="nav navbar-nav navbar-right">
 		  <li><a><?php echo $_SESSION['prenom']."  ".$_SESSION['nom']?></a></li>
