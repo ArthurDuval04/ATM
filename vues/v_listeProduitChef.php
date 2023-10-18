@@ -7,9 +7,13 @@ else {
   include "v_navChef.php";
 }
 ?>
- <h1 class="mx-auto">Modifier les produits</h1>
-<div class="mx-auto bg-white w-50 overflow-auto">
-    <div class="row row-cols-1 row-cols-md-3 g-4 overflow-auto">
+    
+<body>
+<div class="mx-auto"><h1>Modifier les produits</h1></div>
+ 
+</body>
+<div class="mx-auto h-0 bg-white w-50 rounded-5 overflow-auto" style="max-height:600px">
+    <div class="h-50 row row-cols-1 row-cols-md-3 g-4">
      
     <?php
      $lesProduits = $pdo->produitValides();
@@ -24,7 +28,7 @@ else {
                                 <p class="card-text"><strong>Effets indésirables : </strong>'.$row["effetIndesirable"].' </p>
                             </div>
                             <div class="mx-auto">
-                                <a href="index.php?uc=produit&action=='.$row["id"].'" class="btn btn-success">Modifier</a>
+                                <a href="index.php?uc=produit&action=modifierProduit&id='.$row["id"].'" class="btn btn-success">Modifier</a>
                             </div>  
 
                         </div>

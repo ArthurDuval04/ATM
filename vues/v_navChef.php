@@ -24,8 +24,7 @@ else {
           Action visioconférences
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Créer une viso</a></li>
-            <li><a class="dropdown-item" href="#">Visio en attentes de validation</a></li>
+            <li><a class="dropdown-item" href="index.php?uc=visio&action=listeViso">Visio</a></li>
           </ul>
         </li>
         <li class="nav-item dropdown">

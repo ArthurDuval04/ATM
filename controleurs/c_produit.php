@@ -36,8 +36,7 @@ switch($action){
         $descriptio = $_POST["desc"];
         $effets = $_POST["effetsproduit"];
         $objectifs = $_POST["objectifs"];
-        echo $nom;
-        var_dump($_FILES);
+    
         if(isset($_FILES['image'])){
             $tmpName = $_FILES['image']['tmp_name'];
             $name = $_FILES['image']['name'];
@@ -73,7 +72,35 @@ switch($action){
         
         
     };
- 
+    case 'modifierProduit':{
+        
+       
+        include_once 'vues/v_modifierProduit.php';
+        break;
+        
+        
+    };
+    case 'validerModif': {
+        
+     
+        if(isset($_FILES['image'])){
+            $tmpName = $_FILES['image']['tmp_name'];
+            $name = $_FILES['image']['name'];
+            $size = $_FILES['image']['size'];
+            $error = $_FILES['image']['error'];
+            move_uploaded_file($tmpName, '/var/www/html/ATM/gsbextranetb3/images/'.$name);
+        }
+
+        echo $id = $_POST["idproduit"];
+        $nouveaunom = $_POST["nomproduit"];
+        $nouvelledesc = $_POST["desc"];
+        $nouveaueffets = $_POST["effetsproduit"];
+        $nouvelobjectif = $_POST["objectifs"];
+    
+        $produitUpdate = $pdo->updateProduit($id,$nouveaunom,$nouveaueffets, $nouvelobjectif,$nouvelledesc,$name);
+        include_once 'vues/v_modifierProduit.php';
+        break;
+    }
 };
 
 

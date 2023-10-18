@@ -58,6 +58,9 @@ $estConnecte = estConnecte();
 	   }
 	   case 'produit':{
 		include("controleurs/c_produit.php");break;
+		}
+		case 'visio':{
+			include("controleurs/c_visio.php");break;
 	}
 
    }

@@ -382,6 +382,82 @@ function refuserProduit($id){
     $sql->execute();
     return $sql->fetchAll();
 }
+function updateProduit($id,$nouveaunom,$nouveaueffets, $nouvelobjectif,$nouvelledesc,$nouvelleimg) {
+    $pdoStatement = PdoGsb::$monPdo->prepare("UPDATE produit SET nom=:nvnom, objectif=:nvobjectif, information=:nvinfo, effetIndesirable=:nveffets, img_name=:nvimg, estValide = :estValide WHERE id = :id");
+    $bv1 = $pdoStatement->bindValue(':nvnom', $nouveaunom);
+    $bv2 = $pdoStatement->bindValue(':id', $id);
+    $bv3 = $pdoStatement->bindValue(':nvobjectif', $nouvelobjectif);
+    $bv4 = $pdoStatement->bindValue(':nvinfo', $nouvelledesc);
+    $bv5 = $pdoStatement->bindValue(':nveffets', $nouveaueffets);
+    $bv6 = $pdoStatement->bindValue(':nvimg', $nouvelleimg);
+    $bv7 = $pdoStatement->bindValue(':estValide', 0);
+    $execution = $pdoStatement->execute();
+    return $execution;
+}
+function getVisio(){
+    $pdo = PdoGsb::$monPdo;
+    $sql = $pdo->prepare("SELECT * FROM visioconference");
+    $sql->execute();
+    return $sql->fetchAll();
+}
+function updateVisio($id,$nouveaunom,$nouvelledate, $nouveauobj) {
+    $pdoStatement = PdoGsb::$monPdo->prepare("UPDATE visioconference SET nomVisio=:nvnom, objectif=:nvobjectif, dateVisio=:nvdate WHERE id = :id");
+    $bv1 = $pdoStatement->bindValue(':nvnom', $nouveaunom);
+    $bv2 = $pdoStatement->bindValue(':id', $id);
+    $bv3 = $pdoStatement->bindValue(':nvobjectif', $nouveauobj);
+    $bv4 = $pdoStatement->bindValue(':nvdate', $nouvelledate);
+    $execution = $pdoStatement->execute();
+    return $execution;
+}
+
+function deleteVisio($id){
+    $pdo = PdoGsb::$monPdo;
+    $sql = $pdo->prepare("DELETE  FROM visioconference WHERE id = :id");
+    $bv1 = $sql->bindValue(':id', $id);
+    $exe = $sql->execute();
+    return $exe;
+}
+function creerVisio($nom,$objectif,$date){
+    $rand = rand(1,2000);
+    $url = "index.php?uc=visio&action=visioconference$rand";
+    $pdoStatement = PdoGsb::$monPdo->prepare("INSERT INTO visioconference(nomVisio,objectif, dateVisio,url) "
+            . "VALUES (:nom, :obj,:date,:url)");
+    $bv1 = $pdoStatement->bindValue(':nom', $nom);
+    $bv2= $pdoStatement->bindValue(':obj', $objectif);
+    $bv3 = $pdoStatement->bindValue(':date', $date);
+    $bv4 = $pdoStatement->bindValue(':url', $url);
+    $execution = $pdoStatement->execute();
+    if ($execution) {
+        $idVisio = PdoGsb::$monPdo->lastInsertId();
+        $this->creerAvisLigne($idVisio);
+    }
+    
+    return $execution;
+    
+}
+function creerAvisLigne($id) { 
+    $pdoStatement = PdoGsb::$monPdo->prepare("INSERT INTO avisviso(avis,idVisio) "
+    . "VALUES (:avis,:id)");
+    $bv1 = $pdoStatement->bindValue(':avis', "Aucun avis");
+    $bv1 = $pdoStatement->bindValue(':id', $id);
+    $execution = $pdoStatement->execute();
+    return $execution;
+}
+function getAvis($id) {
+    $pdo = PdoGsb::$monPdo;
+    $sql = $pdo->prepare("SELECT avis FROM avisviso WHERE idVisio=:id AND estValide = :val");
+    $bv4 = $sql->bindValue(':id', $id);
+    $bv4 = $sql->bindValue(':val',1);
+    if ($sql->execute()) {
+        $retour= $sql->fetch();
+   
+    }
+    else{        
+        throw new Exception("erreur");
+        $retour = "aucun avis";
+    }
+    return $retour;
+}
 }
 
 ?>
