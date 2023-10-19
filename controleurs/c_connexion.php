@@ -13,8 +13,8 @@ switch($action){
 	}
 	
 	case 'valideConnexion':{
-		$login = $_POST['login'];
-		$mdp = $_POST['mdp'];
+		$login = strip_tags($_POST['login']);
+		$mdp = strip_tags($_POST['mdp']);
 		 
     
 		$connexionOk = $pdo->checkUser($login,$mdp);
@@ -460,12 +460,12 @@ switch($action){
 	case'valideAuthCode': {
 	
        
-		$num1 = $_POST['num1'];
-		$num2 = $_POST['num2'];
-		$num3 = $_POST['num3'];
-		$num4 = $_POST['num4'];
-		$num5 = $_POST['num5'];
-		$num6 = $_POST['num6'];
+		$num1 = strip_tags($_POST['num1']);
+		$num2 = strip_tags($_POST['num2']);
+		$num3 = strip_tags($_POST['num3']);
+		$num4 = strip_tags($_POST['num4']);
+		$num5 = strip_tags($_POST['num5']);
+		$num6 = strip_tags($_POST['num6']);
 		$lecodestring = $num1 . $num2 . $num3 . $num4 . $num5 . $num6;
 
 		$lecode = $pdo->recupererAuthCode($_SESSION["mail"]);
@@ -499,8 +499,12 @@ switch($action){
 						break;
 					case 'Medecin': 
 						include("vues/v_sommaire.php");
+						break;
 					case 'ChefdeProduit': {
 						include("vues/v_chefproduit.php");
+					}
+					case 'Moderateur': {
+						include("vues/v_sommaire.php");
 					}
 				};
 				

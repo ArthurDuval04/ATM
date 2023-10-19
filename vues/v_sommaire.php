@@ -1,4 +1,5 @@
 <?php
+include 'navSommaire.php';
 if (!$_SESSION['id'])
     header('Location: ../index.php');
 else {
@@ -18,6 +19,8 @@ else {
 	  <link href="assets/profilcss/profil.css" rel="stylesheet">
     <!-- styles -->
     <link href="css/styles.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -28,56 +31,7 @@ else {
   </head>
   <body background="assets/img/laboratoire.jpg">
   <body background="assets/img/laboratoire.jpg">
-  <nav class="navbar navbar-expand-lg bg-light">
-  <div class="container-fluid">
-<<<<<<< HEAD
-    <a class="navbar-brand" href="#">Galaxy Swiss Bourdin</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNavDropdown">
-      <ul class="navbar-nav">
-        <li class="nav-item">
-          <a class ="nav-link" href="index.php?uc=etatFrais&action=selectionnerMois">M'inscrire à une visio</a>
-        </li>
-        <li class="nav-item">
-          <a class ="nav-link" href="index.php?uc=portabilite&action=consulter">Droit a la portabilite</a>
-        </li>
-        <li class="nav-item">
-          <a class ="nav-link" href="index.php?uc=produit&action=voirLesProduits">Consulter les produits</a>
-        </li>
-=======
-    <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-        <span class="sr-only">Navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="#">Galaxy Swiss Bourdin</a>
-    </div>
-
-    <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav">
-        
-        <li class="active"><a href="index.php?uc=visioavenir&action=consulter">Visioconférence à venir</a></li> 
-        <li class="active"><a href="index.php?uc=visiopasse&action=consulter">Visioconférence passé</a></li> 
-        <li class="active"><a href="index.php?uc=portabilite&action=consulter">Droit à la portabilite</a></li>
-        <li class="active"><a href="index.php?uc=produit&action=voirLesProduits">consulter les produits2</a></li> 
-         
->>>>>>> ea9af7b34c8de464004aa03abf21a30c04eb2fd4
-      </ul>
-      <ul class="nav navbar-nav navbar-right">
-		  <li><a><?php echo $_SESSION['prenom']."  ".$_SESSION['nom']?></a></li>
-		  <li><a href="index.php?uc=gestionRole&action=<?php echo $_SESSION['role']?>"> <?php echo $_SESSION["role"]?></a></li>
-
-       <li><a href="index.php?uc=deconnection&action=deconnecter">Se deconnecter</a></li>
-     </ul>
-    </div>
-  </div>
-</nav>
+  
 
 
 

@@ -63,4 +63,62 @@ switch($action){
 
         break;
     }
+    case 'lesVisioPasse':{
+        include_once "vues/v_visioPasse.php";
+
+        break;
+    }
+    case 'voirAvis':{
+        include_once "vues/v_avisVisio.php";
+
+        break;
+    }
+    case 'LaisserAvis':{
+        include_once "vues/v_formdonneAvis.php";
+
+        break;
+    }
+    case 'validerdonnerAvis': {
+        $idVisio = $_GET["id"];
+        $idMed = $_SESSION['id'];
+        $avis = $_POST["avis"];
+        $note = $_POST["selectechelle"];
+        $pdo->donnerAvis($idVisio,$idMed,$avis,$note);
+        break;
+    }
+    case 'visiosaVenir': {
+        include 'vues/v_visioVenir.php';
+        
+        break;
+    }
+    case 'inscrire': {
+        $idVisio = $_GET["id"];
+        $idMed = $_SESSION["id"];
+        if($pdo->incriptionVisio($idVisio,$idMed)) {
+            echo '<script language="javascript">
+                alert("Vous vous êtes bien inscrit à la visio");
+            </script>';
+            include 'vues/v_visioVenir.php';
+        } else {
+            echo '<script language="javascript">
+                alert("Vous êtes déjà inscrit à la visio");
+            </script>';
+        };
+        
+        break;
+    }
+    case 'voirCommentairesAdmin' : {
+
+        include 'vues/v_avisVisio.php';
+        break;
+    }
+    case 'validerUnAvis' : {
+
+        $pdo->validerAvis($_GET['id']);
+        include 'vues/v_avisVisio.php';
+        break;
+    }
+    
+
+
 }

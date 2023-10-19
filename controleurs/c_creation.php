@@ -12,14 +12,14 @@ switch($action){
 	}
 	case 'valideCreation':{
 		
-    $datenaissance = $_POST['datenaissance'];
-    $nom = $_POST['nom'];
-    $prenom = $_POST['prenom'];
-    $tel = $_POST['numerodetelephone'];
-    $RPPS = $_POST['RPPS'];
-    $dateDiplome = $_POST['Datedediplome'];
-		$leLogin = htmlspecialchars($_POST['login']);
-    $lePassword = htmlspecialchars($_POST['mdp']);
+    $datenaissance = strip_tags($_POST['datenaissance']);
+    $nom = strip_tags($_POST['nom']);
+    $prenom = strip_tags($_POST['prenom']);
+    $tel = strip_tags($_POST['numerodetelephone']);
+    $RPPS = strip_tags($_POST['RPPS']);
+    $dateDiplome = strip_tags($_POST['Datedediplome']);
+		$leLogin = strip_tags($_POST['login']);
+    $lePassword = strip_tags($_POST['mdp']);
        
         if(!isset($_POST['acceptepolitquecheckbox'])) {
             $politiqueOk = false;
@@ -31,7 +31,7 @@ switch($action){
         }
         
         
-        if ($leLogin == $_POST['login'])
+        if ($leLogin == strip_tags($_POST['login']))
         {
              $loginOk = true;
              $passwordOk=true;
@@ -517,7 +517,10 @@ switch($action){
                       </body>
                     </html>');
                     $dataValidateur = $pdo->donnerValidateur();
-                    $mailValidateur = $dataValidateur["mail"];
+                    if($dataValidateur) {
+
+                      $mailValidateur = $dataValidateur["mail"];
+                    }
                     $emailEnvoiValidateur = new EmailModel();
                     $validation = $emailEnvoiValidateur->sendEmail($mailValidateur, "Un nouveau medecin souhaite etre valide", '<!doctype html>
                     <html>
@@ -872,10 +875,10 @@ switch($action){
                                           <td >
                                             <p>Bonjour,</p>
                                             <p>Un medecin souhaite être validé.</p>
-                                            <p>Nom : '.$_POST['nom'].'</p>
-                                            <p>Prenom : '.$_POST['prenom']. '</p> 
-                                            <p>Mail : ' .$_POST['login'] . '</p>
-                                            <p>RPPS : '.$RPPS.'</p><br> 
+                                            <p>Nom : '.strip_tags($_POST['nom']).'</p>
+                                            <p>Prenom : '.strip_tags($_POST['prenom']). '</p> 
+                                            <p>Mail : ' .strip_tags($_POST['login']) . '</p>
+                                            <p>RPPS : '.strip_tags($RPPS).'</p><br> 
                                     
                                             <table role="presentation" border="0" cellpadding="0" cellspacing="0" class="btn btn-primary">
                                               <tbody>

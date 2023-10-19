@@ -98,6 +98,19 @@ function donneLeMedecinByMail($login) {
     return $unUser;   
 }
 
+function donneLeMedecinByID($id) {
+    
+    $pdo = PdoGsb::$monPdo;
+    $monObjPdoStatement=$pdo->prepare("SELECT id, nom, prenom,mail,roleMedecin,mailverifie, droitConnexion,roleMedecin FROM medecin WHERE id= :login");
+    $bvc1=$monObjPdoStatement->bindValue(':login',$id);
+    if ($monObjPdoStatement->execute()) {
+        $unUser=$monObjPdoStatement->fetch();
+       
+    }
+    else
+        throw new Exception("erreur dans la requÃªte");
+    return $unUser;   
+}
 function donnerValidateur() {
     $pdo = PdoGsb::$monPdo;
     $monObjPdoStatement=$pdo->prepare("SELECT id, nom, prenom,mail,roleMedecin,mailverifie, droitConnexion FROM medecin WHERE roleMedecin= :roleId");
@@ -443,21 +456,106 @@ function creerAvisLigne($id) {
     $execution = $pdoStatement->execute();
     return $execution;
 }
-function getAvis($id) {
+function getAvis() {
     $pdo = PdoGsb::$monPdo;
-    $sql = $pdo->prepare("SELECT avis FROM avisviso WHERE idVisio=:id AND estValide = :val");
-    $bv4 = $sql->bindValue(':id', $id);
+    $sql = $pdo->prepare("SELECT * FROM avisviso WHERE estValide = :val");
+
     $bv4 = $sql->bindValue(':val',1);
     if ($sql->execute()) {
-        $retour= $sql->fetch();
+        $retour= $sql->fetchAll();
    
     }
     else{        
         throw new Exception("erreur");
-        $retour = "aucun avis";
     }
     return $retour;
 }
+function validerAvis($id) {
+    $pdoStatement = PdoGsb::$monPdo->prepare("UPDATE avisviso SET estValide=:valide WHERE id = :id");
+    $bv1 = $pdoStatement->bindValue(':valide', 1);
+    $bv2 = $pdoStatement->bindValue(':id', $id);
+    $execution = $pdoStatement->execute();
+    return $execution;
+}
+function getAvisNonValide() {
+    $pdo = PdoGsb::$monPdo;
+    $sql = $pdo->prepare("SELECT * FROM avisviso WHERE estValide = :val");
+
+    $bv4 = $sql->bindValue(':val',0);
+    if ($sql->execute()) {
+        $retour= $sql->fetchAll();
+   
+    }
+    else{        
+        throw new Exception("erreur");
+    }
+    return $retour;
+}
+
+function getVisioPasse() {
+    $pdo = PdoGsb::$monPdo;
+    $todayDate = date("Y-m-d");
+    $sql = $pdo->prepare("SELECT * FROM visioconference WHERE dateVisio < :todayDate");
+    $sql->bindParam(":todayDate", $todayDate);
+    $sql->execute();
+    return $sql->fetchAll();
+}
+
+function donnerAvis($idVisio,$idMed,$avis,$note) {
+    
+    $pdoStatement = PdoGsb::$monPdo->prepare("INSERT INTO avisviso(avis,idVisio,estValide,note,idMed) "
+    . "VALUES (:avis,:id,:valide,:note,:idMed)");
+    $bv1 = $pdoStatement->bindValue(':avis', $avis);
+    $bv2 = $pdoStatement->bindValue(':id', $idVisio);
+    $bv3 = $pdoStatement->bindValue(':valide', 0);
+    $bv4 = $pdoStatement->bindValue(':note', $note);
+    $bv4 = $pdoStatement->bindValue(':idMed', $idMed);
+    $execution = $pdoStatement->execute();
+    return $execution;
+    
+}
+
+function getuneVisioPasse($id) {
+    $pdo = PdoGsb::$monPdo;
+    $avis = 'Aucun avis';
+    $sql = $pdo->prepare("SELECT avis FROM avisviso WHERE idVisio =:id and avis = :avis");
+    $bv1 =$sql->bindParam(":id", $id);
+    $bv2 =$sql->bindParam(":avis", $avis);
+    $sql->execute();
+    $retour =$sql->fetch();
+    return $retour;
+}
+function getVisioVenir() {
+    $pdo = PdoGsb::$monPdo;
+    $todayDate = date("Y-m-d");
+    $sql = $pdo->prepare("SELECT * FROM visioconference WHERE dateVisio > :todayDate");
+    $sql->bindParam(":todayDate", $todayDate);
+    $sql->execute();
+    return $sql->fetchAll();
+}
+
+function incriptionVisio($idVisio,$idMed) {
+    $todayDate = date("Y-m-d");
+    $pdoStatement = PdoGsb::$monPdo->prepare("INSERT INTO medecinvisio(idMedecin,idVisio,dateInscription) "
+    . "VALUES (:idMed,:idVisio,:date)");
+    $bv1 = $pdoStatement->bindValue(':idMed', $idMed);
+    $bv2 = $pdoStatement->bindValue(':idVisio', $idVisio);
+    $bv3 = $pdoStatement->bindValue(':date', $todayDate);
+    $execution = $pdoStatement->execute();
+    return $execution;
+}
+function getVisioInscritePasse($idMed) {
+    $pdo = PdoGsb::$monPdo;
+    $todayDate = date("Y-m-d");
+    $sql = $pdo->prepare("SELECT * FROM visioconference INNER JOIN medecinvisio ON medecinvisio.idVisio = visioconference.id WHERE medecinvisio.idMedecin = :id AND dateVisio < :ladate");
+    $sql->bindParam(":id", $idMed);
+    $sql->bindParam(":ladate", $todayDate);
+    $sql->execute();
+    return $sql->fetchAll();
+}
+
+
+
 }
 
 ?>

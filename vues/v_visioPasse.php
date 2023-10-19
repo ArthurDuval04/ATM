@@ -1,22 +1,16 @@
-<?php include("v_navChef.php");
+<?php
+    include "v_sommaire.php";
 
 ?>
-<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+
 <body>
-<div class="container w-100 mx-auto">
-    <?php
-        if($_SESSION["role"]== "ChefdeProduit") {
-            echo '<div class ="text-center"><a  href ="index.php?uc=visio&action=creerVisio" class="btn btn-primary mb-4">+ Créer une visio</a></div>';
-        }
-    
-    ?>
-<div class="row">
+
+
+<div class="row mx-auto">
 	<div class="col-lg-max">
 		<div class="main-box clearfix">
-			<div class="table-responsive">
+			<div class="table-responsive text-center">
+                <h1 >Visios passées</h1>
 				<table class="table user-list">
 					<thead>
 						<tr>
@@ -25,16 +19,18 @@
 							<th><span>Date</span></th>
 							<th class="text-center"><span>Objectif</span></th>
 							<th><span>Lien</span></th>
+                            <th>&nbsp;</th>
                             <?php  if($_SESSION["role"] =="ChefdeProduit") { echo '<th>&nbsp;</th>';}?>
-                            
 						</tr>
 					</thead>
 					<tbody>
                         <?php
-                            $visios = $pdo->getVisio();
-                            foreach ($visios as $lesvisios) {
-                                if($_SESSION["role"] !="ChefdeProduit") {
 
+                            $visiospasses = $pdo->getVisioInscritePasse($_SESSION["id"]);
+                            foreach ($visiospasses as $lesvisios) {
+                                if($_SESSION["role"] !="ChefdeProduit") {
+                                    $visiosid = $pdo->getuneVisioPasse($lesvisios['id']);
+                                    
                                     echo '<tr >
                                     <td>
                                        '.$lesvisios['id'].'
@@ -52,10 +48,12 @@
                                         <a href="#">'.$lesvisios['url'].'</a>
                                     </td>
                                     <td>
-
-                                        <input type="text" class="form-control" name="nom" value ='.$lesvisios['nomVisio'].'></input> 
+                                        <a href="index.php?uc=visio&action=LaisserAvis&id='. $lesvisios['id'] .'" class="btn btn-danger mb-4 table-link">
+                                        <i class="fa fa-trash"></i>
+                                            Laisser un avis
+                                        </a>
+                                     
                                     </td>
-                                    
 						        </tr>';
                                 } else {
                                     
@@ -78,14 +76,8 @@
                                     </td>
                                     <td style="width: 10%;">
                                         <a href="#" name="url">'.$lesvisios['url'].'</a>
-                                    </td>
-                                    <td style="width: 10%;">';
-                                    if ($pdo->getAvis($lesvisios['id'])) {
-                                        echo '<p>' . $avis["avis"] . '</p>';
-                                    } else {
-                                        echo '<p>aucun avis</p>';
-                                    }
-                                    echo '</td>';
+                                    </td>';
+                            
                                     echo '<td style="width: 10%;">
                                      
                                         <button type="submit" class="btn btn-success mb-4 table-link">
@@ -119,6 +111,5 @@
 			</div>
 		</div>
 	</div>
-</div>
 </div>
 </body>

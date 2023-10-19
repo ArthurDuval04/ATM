@@ -7,11 +7,7 @@ $action = $_GET['action'];
 switch($action){
 	
 	case 'voirLesProduits':{
-        if($_SESSION["role"] == "Medecin" or $_SESSION["role"] == "ChefdeProduit" ) {
-            include_once 'vues/v_produit.php';
-        } else {
-            include_once 'vues/v_sommaire.php';
-        }
+          include_once 'vues/v_produit.php';
         break;
     };
     case 'ajouterProduits':{

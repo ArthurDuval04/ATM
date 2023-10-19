@@ -1,7 +1,7 @@
 ﻿
 
 <?php 
-  include("v_sommaire.php");
+  include 'navSommaire.php';
 
 ?>
 
@@ -18,7 +18,7 @@
 
 <div class="container">
 <h2 > Voici les produits présentés : </h2>
-    <div class="flip-cards-container">
+    <div class="flip-cards-container" style="height:500px">
     <?php
     $lesProduits = $pdo->produitValides();
     foreach ($lesProduits as $row) {
